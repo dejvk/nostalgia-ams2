@@ -1,0 +1,47 @@
+{block content}
+<h1 n:block="title">{$request->item_name}</h1>
+
+<table class="unique-requests">
+  <tr>
+    <td>
+      <h2 class="unique-name">
+          {$request->item_name}
+      </h2>
+      <div class="unique-meta">
+        <div class="unique-state {AMS\UniqueRepository::State($request->state)[0]}">
+          {AMS\UniqueRepository::State($request->state)[1]}
+        </div>
+        <div class="unique-author">
+          {if $request->name_ext}
+            {$request->name_ext}
+          {else}
+            {$request->name}
+          {/if}
+        </div>
+        <div class="unique-origin">
+          {if $request->item_type == 0}
+            <a href="http://www.wowhead.com/item={$request->item_entry}">Wowhead</a>
+          {else}
+            <a href="http://www.wowhead.com/spell={$request->item_entry}">Wowhead</a>
+          {/if}
+        </div>
+        <div class="unique-changed">
+          {$request->last_change|date:'d.m.Y'}
+        </div>
+        <div n:if="$user->isLoggedIn() && $user->getIdentity()->data['rights'] > 5" class="unique-votes">
+          <span class="positive">{$votesCnt[0]} pro</span>
+          <span class="negative">{$votesCnt[1]} proti</span>
+        </div>
+      </div>
+      <p class="unique-desc">
+        {$request->item_desc}
+      </p>
+      <h3>Komentáře</h3>
+      <div class="unique-comments">
+        <p n:foreach="$votes as $vote" n:class="$vote->vote == 1 ? positive : negative">{$vote->notes}</p>
+      </div>
+    </td>
+  </tr>
+</table>
+
+{/block}

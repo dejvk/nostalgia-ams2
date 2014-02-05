@@ -1,0 +1,54 @@
+{block content}
+
+<h1>Individuální podpora</h1>
+
+<div class="flash info">
+  V současné době není možné přidávat nové žádosti o unikátní itemy &ndash; ty
+  budou do hry zatím zařazovány pouze při eventech. Pokud však máte tip na věc,
+  která by se ve hře měla objevit, pak vaši představu včetně příběhu, co se k
+  dané věci pojí, pošlete někomu z <a href="http://www.pk-nostalgia.cz/tym">
+  Týmu Nostalgie</a> zodpovědných za příběh.
+</div>
+<div class="flash info">
+  Obdobně postupujte v případě unikátních spellů. V takovém případě použijte
+  Soukromou zprávu na fóru adresovanou skupině Vývojářský tým. Do budoucna bude
+  pravděpodobně možnost žádat o spelly přímo skrze tento web.
+</div>
+
+<table class="unique-requests">
+  {foreach $uniques as $unique}
+  <tr>
+    <td>
+      <h2 class="unique-name">
+        <a n:href="Unique:Request $unique->uid">
+          {$unique->item_name}
+        </a>
+      </h2>
+      <div class="unique-meta">
+        <div class="unique-state {AMS\UniqueRepository::State($unique->state)[0]}">
+          {AMS\UniqueRepository::State($unique->state)[1]}
+        </div>
+        <div class="unique-author">
+          <a n:href="Characters:Character $unique->name">{$unique->name_ext ? $unique->name_ext : $unique->name}</a>
+        </div>
+        <div class="unique-origin">
+          {if $unique->item_type == 0}
+            <a href="http://www.wowhead.com/item={$unique->item_entry}">Wowhead</a>
+          {else}
+            <a href="http://www.wowhead.com/spell={$unique->item_entry}">Wowhead</a>
+          {/if}
+        </div>
+        <div class="unique-changed">
+          Změněno {$unique->last_change|date:'j.n.Y'}
+        </div>
+      </div>
+      <p class="unique-desc">
+        {$unique->item_desc|truncate:310}
+      </p>
+    </td>
+  </tr>
+  {/foreach}
+</table>
+
+
+{/block}

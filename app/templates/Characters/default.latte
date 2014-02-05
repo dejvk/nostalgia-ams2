@@ -1,0 +1,32 @@
+{block content}
+
+<h1 n:block="title">Registr postav</h1>
+
+<table class="character-register">
+  {foreach $chars as $char}
+  <tr>
+    <td>
+      <h2 class="char-name">
+        <a n:href="Characters:Character $char->name">
+          {$char->name_ext ? $char->name_ext : $char->name}
+        </a>
+      </h2>
+      <div class="char-meta">
+        <div class="char-race">{AMS\CharacterRepository::RaceAsString($char->race)}</div>
+        <div n:if="$char->profession" class="char-profession">
+          {$char->profession}
+        </div>
+        <div n:if="$char->birth_year" class="char-age">
+          {date("Y") - 1393 - $char->birth_year} let
+        </div>
+      </div>
+      <p class="char-desc">
+        {$char->description|truncate:310}
+      </p>
+    </td>
+  </tr>
+  {/foreach}
+</table>
+
+
+{/block}

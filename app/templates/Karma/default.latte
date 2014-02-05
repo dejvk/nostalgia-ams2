@@ -1,0 +1,54 @@
+﻿{block content}
+
+<h1 n:block="title">Karma</h1>
+
+<h2>Získaná karma</h2>
+
+{if $karmaReceived->getRowCount() == 0}
+  <div class="flash info">Zatím jste nezískali žádnou karmu.</div>
+{else}
+  <p>Celkem získáno <strong>{$karmaStats['karma']}</strong> karmy během {$karmaReceived->getRowCount()} hodnocení. Přepočítáno na <strong>{$karmaStats['active']}</strong> aktivní vážené karmy.</p>
+  <table class="karma-table">
+    <tr>
+      <th title="Hodnota"></th>
+      <th>Důvod</th>
+      <th>Čas</th>
+    </tr>
+    <tr n:foreach="$karmaReceived as $karmaRow">
+      <td n:class="karma-value, ($karmaRow->karma_hodnota < 0) ? negative, $karmaRow->karma_hodnota > 1 ? positive">{$karmaRow->karma_hodnota}</td>
+      <td class="karma-reason">
+        {$karmaRow->duvod}
+        <span n:if="$karmaRow->vyhovuje == 0" class="invalidreason">Tento důvod nevyhovuje pravidlům a brzy bude odstraněn</span>
+      </td>
+      <td class="karma-date">{$karmaRow->time|date:'j.n.Y'}</td>
+    </tr>
+  </table>
+{/if}
+
+
+<h2>Rozdaná karma</h2>
+
+{if $karmaGiven->getRowCount() == 0}
+  <div class="flash info">Zatím jste nerozdali žádnou karmu.</div>
+{else}
+  <p>Celkem rozdáno <strong>{$karmaGiven->getRowCount()}</strong> hodnocení.</p>
+  <table class="karma-table">
+    <tr>
+      <th title="Hodnota"></th>
+      <th>Důvod</th>
+      <th>Čas</th>
+    </tr>
+    <tr n:foreach="$karmaGiven as $karmaRow">
+      <!--<td n:class="karma-value, ($karmaRow->karma_hodnota) < 0 ? negative, $karmaRow->karma_hodnota > 1 ? positive">{$karmaRow->karma_hodnota}</td>-->
+      <td n:class="karma-value, ($karmaRow->karma_hodnota) < 0 ? negative, $karmaRow->karma_hodnota > 1 ? positive">{$karmaRow->karma_hodnota}</td>
+      <td class="karma-reason">
+        {$karmaRow->duvod}
+        <span n:if="$karmaRow->vyhovuje == 0" class="invalidreason">Tento důvod nevyhovuje pravidlům a brzy bude odstraněn</span>
+      </td>
+      <td class="karma-date">{$karmaRow->time|date:'j.n.Y'}</td>
+    </tr>
+  </table>
+{/if}
+
+
+{/block}

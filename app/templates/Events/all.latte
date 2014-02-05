@@ -1,0 +1,13 @@
+{block content}
+
+<h1 n:block="title">Všechny eventy</h1>
+
+<table class="all-events">
+<tr n:foreach="$events as $event">
+  <td class="event-date">{$event->datetime|date:'%d.%m.%Y'}
+  <td class="event-name">{$event->name}
+  <td class="event-desc">{$event->description}
+</tr>
+</table>
+
+{/block}

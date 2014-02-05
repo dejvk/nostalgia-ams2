@@ -1,0 +1,33 @@
+{block content}
+
+{if $char}
+
+<h1 n:block="title">{$char->name_ext}</h1>
+
+<table class="character-register">
+  <tr>
+    <td>
+      <h2 class="char-name">
+        {$char->name_ext}
+      </h2>
+      <div class="char-meta">
+        <div class="char-race">{AMS\CharacterRepository::RaceAsString($char->race)}</div>
+        <div n:if="$char->profession" class="char-profession">
+          {$char->profession}
+        </div>
+        <div n:if="$char->birth_year" class="char-age">
+          {date("Y") - 1393 - $char->birth_year} let
+        </div>
+      </div>
+      <p clas="char-desc">
+        {$char->description}
+      </p>
+    </td>
+  </tr>
+</table>
+
+{else}
+  <div class="flash error">Postava nebyla nalezena.</div>
+{/if}
+
+{/block}

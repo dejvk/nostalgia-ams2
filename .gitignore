@@ -1,0 +1,11 @@
+# do not track connection credentials
+app/config/
+
+# do not track debug settings
+app/bootstrap.php
+
+# ignore framework directories
+libs/
+log/
+temp/
+tests/

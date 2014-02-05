@@ -1,0 +1,38 @@
+<table class="unique-requests">
+  {foreach $uniques as $unique}
+  <tr>
+    <td>
+      <h2 class="unique-name">
+        <a n:href="Unique:Request $unique->uid">
+          {$unique->item_name}
+        </a>
+      </h2>
+      <div class="unique-meta">
+        <div class="unique-state {AMS\UniqueRepository::State($unique->state)[0]}">
+          {AMS\UniqueRepository::State($unique->state)[1]}
+        </div>
+        <div class="unique-author">
+          {if $unique->name_ext}
+            {$unique->name_ext}
+          {else}
+            {$unique->name}
+          {/if}
+        </div>
+        <div class="unique-origin">
+          {if $unique->item_type == 0}
+            <a href="http://www.wowhead.com/item={$unique->item_entry}">Wowhead</a>
+          {else}
+            <a href="http://www.wowhead.com/spell={$unique->item_entry}">Wowhead</a>
+          {/if}
+        </div>
+        <div class="unique-changed">
+          Změněno {$unique->last_change|date:'j.n.Y'}
+        </div>
+      </div>
+      <p class="unique-desc">
+        {$unique->item_desc|truncate:310}
+      </p>
+    </td>
+  </tr>
+  {/foreach}
+</table>

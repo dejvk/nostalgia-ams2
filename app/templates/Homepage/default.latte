@@ -1,0 +1,15 @@
+{block content}
+<h1>Informační systém serveru Nostalgia</h1>
+
+<p>Vítejte v novém informačním systému serveru Nostalgia.</p>
+
+<h2>Nejbližší eventy v kalendáři</h2>
+<table class="oncoming-events">
+<tr n:foreach="$events as $event">
+  <td class="event-date">{$event->datetime|date:'%d.%m.%Y'}
+  <td class="event-name">{$event->name|truncate:25}
+  <td class="event-desc">{$event->description|truncate:50}
+</tr>
+</table>
+
+{/block}

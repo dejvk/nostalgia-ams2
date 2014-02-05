@@ -1,0 +1,51 @@
+﻿{block content}
+
+<h1 n:block="title">Tikety</h1>
+
+{if $user->getIdentity()->data['gmlevel2'] < 3 && $user->getIdentity()->data['rights'] < 3}
+  <div class="flash error">Tato sekce je dostupná pouze správcům.</div>
+{else}
+
+  <h2>Otevřené tikety</h2>
+
+  {if $openTickets->getRowCount() == 0}
+    <div class="flash info">Žádné tikety nečekají na vyřízení.</div>
+  {else}
+    <table class="ticket-list">
+    <tr>
+      <th>Hráč</th>
+      <th>Text</th>
+      <th>Poslední změna</th>
+    </tr>
+    <tr n:foreach="$openTickets as $ticket">
+      <td n:class="ticket-player, $ticket->online ? 'online'">{$ticket->name}</td>
+      <td class="ticket-text">{$ticket->ticket_text}</td>
+      <td class="ticket-date">{$ticket->ticket_lastchange|date:'j.n.'}</td>
+    </tr>
+    </table>
+  {/if}
+
+  <h2>Vyřízené tikety</h2>
+
+  {if $closedTickets->getRowCount() == 0}
+    <div class="flash info">Žádné tikety nečekají na vyřízení.</div>
+  {else}
+    <table class="ticket-list">
+    <tr>
+      <th>Hráč</th>
+      <th>Text</th>
+      <th>Poslední změna</th>
+    </tr>
+    <tr n:foreach="$closedTickets as $ticket">
+      <td n:class="ticket-player, $ticket->online ? 'online'">{$ticket->name}</td>
+      <td class="ticket-text">{$ticket->ticket_text}
+          <div class="ticket-separator"> </div>
+          <div class="ticket-response">{$ticket->response_text}</div></td>
+      <td class="ticket-date">{$ticket->ticket_lastchange|date:'j.n.'}</td>
+    </tr>
+    </table>
+  {/if}
+
+{/if}
+
+{/block}
