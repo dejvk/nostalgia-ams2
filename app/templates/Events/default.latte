@@ -4,9 +4,20 @@
 
 <table class="oncoming-events">
 <tr n:foreach="$events as $event">
-  <td class="event-date">{$event->datetime|date:'%d.%m.%Y'}
-  <td class="event-name">{$event->name}
-  <td class="event-desc">{$event->description}
+  <td>
+    <div>
+      <span class="event-date">{$event->datetime|date:'%d.%m.%Y'}</span>
+      <span class="event-name event-category-{$event->category}">{$event->name}</span>
+    </div>
+    <div class="event-desc">{$event->description}</div>
+  </td>
+  <td class="event-control">
+    {if $user->isLoggedIn() && $event->account == $user->getIdentity()->data['id']}
+      <i class="fa fa-thumb-tack" title="Jste vlastníkem tohoto eventu"></i>
+    {/if}
+    {if $user->isLoggedIn() && ($event->account == $user->getIdentity()->data['id'] || $user->getIdentity()->data['gmlevel2'] > 3)}
+      <a class="icon-autohide icon-delete" title="Smazat event" n:href="Events:delete $event->id"><i class="fa fa-trash-o"></i></a>
+    {/if}
 </tr>
 </table>
 

@@ -16,9 +16,10 @@ class EventRepository extends Nette\Object
   public function findOncoming ( $limit = 30 )
   {
     return $this->database->query ("
-      SELECT name, description, datetime
+      SELECT id, account, name, description, datetime, category
       FROM _wp_calendar
       WHERE datetime >= '" . date("Y-m-d") . " 00:00:00'
+      AND category >= 0
       ORDER BY datetime
       LIMIT 0, $limit
     ");
@@ -35,5 +36,25 @@ class EventRepository extends Nette\Object
       FROM _wp_calendar
       ORDER BY datetime
     ");
+  }
+  
+  public function deleteEvent ( $id )
+  {
+    global $container;
+    $user = $container->getService('user');
+    if ( ! $user->isLoggedIn() )
+      return "ErrUserNotLogged";
+
+    $q = $this->database->query ("SELECT id, name, account
+                                  FROM _wp_calendar
+                                  WHERE id = '$id'");
+    if ($q->getRowCount() == 0)
+      return "ErrEventNotFound";
+    $qr = $q->fetch();
+    if ($qr['account'] != $user->getIdentity()->data['id'] && $user->getIdentity()->data['gmlevel2'] < 4)
+      return "ErrNotOwnEvent";
+    
+    $this->database->query ("UPDATE _wp_calendar SET category = -1 WHERE id = '$id'");
+    return "OK";
   }
 }

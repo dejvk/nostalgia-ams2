@@ -1,0 +1,11 @@
+{block content}
+
+<h1 n:block="title">Smazání eventu</h1>
+
+{if $eventDeleteStatus == "OK"}
+  <div class="flash success">Event úspěšně smazán.</div>
+{else}
+  <div class="flash error">Při mazání došlo k chybě.</div>
+{/if}
+
+{/block}
