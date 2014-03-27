@@ -2,7 +2,25 @@
 
 <h1 n:block="title">Nadcházející eventy</h1>
 
-<table class="oncoming-events">
+<ul class="list-group">
+  <li n:foreach="$events as $event" class="list-group-item">
+    <div class="pull-right">
+      <span n:if="$user->isLoggedIn() 
+                  && $event->account == $user->getIdentity()->data['id']">
+        <i class="fa fa-user"> </i> Můj event
+      </span>
+      <span n:if="$user->isLoggedIn() 
+                  && ($event->account == $user->getIdentity()->data['id'] 
+                  || $user->getIdentity()->data['gmlevel2'] > 3)">
+        <a n:href="Events:delete $event->id"><i class="fa fa-trash-o"></i> Smazat</a>
+      </span>
+    </div>
+    <h4 class="list-group-item-heading">{$event->name} <small>{$event->datetime|date:'%d.%m.%Y'}</small></h4>
+    <p class="list-group-item-text">{$event->description}</p>
+  </li>
+</ul>
+
+<table class="table table-hover oncoming-events">
 <tr n:foreach="$events as $event">
   <td>
     <div>
