@@ -15,68 +15,49 @@
 
 	<title>{block title|stripTags|strip}Hlavní stránka{/block} &bull; Nostalgia IS</title>
 
-	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css">
+	<!--<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css">-->
 	<link rel="stylesheet" media="print" href="{$basePath}/css/print.css">
-  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="shortcut icon" href="http://wiki.pk-nostalgia.cz/favicon.ico">
   <link href='http://fonts.googleapis.com/css?family=Merriweather+Sans:400,400italic,300,700&subset=latin-ext' rel='stylesheet' type='text/css'>
 	{block head}{/block}
 </head>
 
 <body>
-<div id="header">
-    <div id="header-inner">
-        <div class="title"><a href="{link Homepage:}">Nostalgia IS</a></div>
-        {if $user->isLoggedIn()}
-        <div class="user">
-          <span class="user" title="Uživatel">{$user->getIdentity()->data['username']}</span>{if $user->getIdentity()->data['rights']} |
-          <span title="Oprávnění">R{$user->getIdentity()->data['rights']}</span>{/if} | 
-          <a n:href="signOut!">Odhlásit se</a>
-        </div>
-        {/if}
-        {if ! $user->isLoggedIn()}
-        <div class="user">
-          <a n:href="Sign:in">Přihlásit se</a>
-        </div>
-        {/if}
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="{link Homepage:}">Nostalgia IS</a>
+      </div>
+      {if $user->isLoggedIn()}
+        <p class="navbar-text navbar-right">Přihlášen jako {$user->getIdentity()->data['username']|lower|firstUpper}. <a n:href="signOut!">Odhlásit se</a></p>
+      {/if}
+      {if ! $user->isLoggedIn()}
+        <p class="navbar-text navbar-right"><a n:href="Sign:in">Přihlásit se</a></p>
+      {/if}
     </div>
-</div>
+  </nav>
 
-<div id="container">
-    <div id="sidebar">
-        <div class="sidebar-menu">
-            <h2>Menu</h2>
-            <ul>
-                <li><a n:href="Homepage:">Domů</a></li>
-                <li><a n:href="Online:">Postavy online</a></li>
-                <li><a n:href="Events:">Kalendář</a></li>
-            </ul>
-            {if $user->isLoggedIn()}
-            <h2>{$user->getIdentity()->data['username']|lower}</h2>
-            <ul>
-              <li><a n:href="Characters:My">Postavy</a></li>
-              <li><a n:href="Karma:">Karma</a></li>
-            </ul>
-            {/if}
-            {if $user->isLoggedIn() && ($user->getIdentity()->data['gmlevel2'] > 2 || $user->getIdentity()->data['rights'] > 2)}
-            <h2>Game Master</h2>
-            <ul>
-              <li><a n:href="Tickets:">Tikety</a></li>
-            </ul>
-            {/if}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="panel panel-default">
+          <div class="panel-heading"><h3 class="panel-title">Menu</h3></div>
+          <div class="list-group">
+            <a n:href="Homepage:" class="list-group-item">Domů</a>
+            <a n:href="Online:" class="list-group-item">Postavy online</a>
+            <a n:href="Events:" class="list-group-item">Kalendář</a>
+          </div>
         </div>
-    </div>
-
-    <div id="content">
+      </div>
+      
+      <div class="col-md-9">
         <div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
-
         {include #content}
+      </div>
     </div>
+  </div>
 
-    <div id="footer">
-      <p>&copy; 2014 <a href="http://www.pk-nostalgia.cz">Nostalgia</a></p>
-      <p>Běží na Nostalgia AMS2 (2.0.43). <a href="https://github.com/dejvk/nostalgia-ams2/issues">Našli jste chybu?</a></p>
-    </div>
-</div>
 </body>
 </html>
