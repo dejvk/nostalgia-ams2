@@ -48,7 +48,7 @@ class CharacterRepository extends Nette\Object
   {
     return $this->database->query ("SELECT c.guid, c.name, COALESCE(e.name, c.name) AS name_ext, e.profession, a.username, a.last_ip, c.money, c.totaltime, c.zone, c.race
                                     FROM characters c
-                                    JOIN nostalgia_realmd.account_prophet a
+                                    JOIN accounts.account_prophet a
                                     ON c.account = a.id
                                     LEFT JOIN character_extended_data e
                                     ON c.guid = e.guid
