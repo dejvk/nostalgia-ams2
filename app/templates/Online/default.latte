@@ -1,25 +1,28 @@
 {block content}
 
-<h1 n:block="title">Online postavy</h1>
-
 {if $characters->getRowCount() != 0}
-<table class="character-table">
-  <tr n:foreach="$characters as $character">
-    <td class="char-name"><a n:href="Characters:Character $character->name">{$character->name_ext ?: $character->name}</a></td>
-    <td class="char-race">{AMS\CharacterRepository::RaceAsString($character->race)}</td>
-    <td n:if="!($user->isLoggedIn() && $user->getIdentity()->data['gmlevel2'] > 3)"
-        class="char-meta">{$character->profession}</td>
-    <td class="char-zone">{AMS\CharacterRepository::ZoneAsString($character->zone)}</td>
-    <td n:if="$user->isLoggedIn() && $user->getIdentity()->data['gmlevel2'] > 3"
-        class="ol-played">{$character->totaltime /60 /60 /24|number:2} dní</td>
-    <td n:if="$user->isLoggedIn() && $user->getIdentity()->data['gmlevel2'] > 3"
-        class="char-money">${$character->money/100}</td>
-    <td n:if="$user->isLoggedIn() && $user->getIdentity()->data['gmlevel2'] > 3" 
-        class="ol-account">{$character->username}</td>
-    <td n:if="$user->isLoggedIn() && $user->getIdentity()->data['gmlevel2'] > 3" 
-        class="ol-ip">{$character->last_ip}</td>
-  </tr>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 n:block="title" class="panel-title">Postavy online</h1>
+  </div>
+  <table class="table table-hover table-striped">
+    <tr n:foreach="$characters as $character">
+      <td class="char-name"><a n:href="Characters:Character $character->name">{$character->name_ext ?: $character->name}</a></td>
+      <td class="char-race">{AMS\CharacterRepository::RaceAsString($character->race)}</td>
+      <td n:if="!($user->isLoggedIn() && $user->getIdentity()->data['gmlevel2'] > 3)"
+          class="char-meta">{$character->profession}</td>
+      <td class="char-zone">{AMS\CharacterRepository::ZoneAsString($character->zone)}</td>
+      <td n:if="$user->isLoggedIn() && $user->getIdentity()->data['gmlevel2'] > 3"
+          class="ol-played">{$character->totaltime /60 /60 /24|number:2} dní</td>
+      <td n:if="$user->isLoggedIn() && $user->getIdentity()->data['gmlevel2'] > 3"
+          class="char-money">${$character->money/100}</td>
+      <td n:if="$user->isLoggedIn() && $user->getIdentity()->data['gmlevel2'] > 3" 
+          class="ol-account">{$character->username}</td>
+      <td n:if="$user->isLoggedIn() && $user->getIdentity()->data['gmlevel2'] > 3" 
+          class="ol-ip">{$character->last_ip}</td>
+    </tr>
   </table>
+</div>
 {else}
   <div class="flash info">Žádná postava není online.</div>
 {/if}
