@@ -118,6 +118,7 @@ class CharacterRepository extends Nette\Object
     {
       case 209: // Falkenstein
       case 130: return 'Hvozd';
+      case 4987: return 'Sen';
     }
   }
   
