@@ -5,7 +5,7 @@ use Nette;
 
 class CharacterRepository extends Nette\Object
 {
-  private $database;
+  protected $database;
   
   public function __construct(Nette\Database\Connection $database)
 	{

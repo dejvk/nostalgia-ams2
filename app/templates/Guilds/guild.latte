@@ -1,0 +1,19 @@
+{block content}
+
+<h1 n:block="title">Členové cechu</h1>
+
+<table>
+  <tr n:foreach="$members as $member">
+    <td>
+      {if $member->member != ""}
+        {$member->member}
+      {else}
+        <del>{$member->deleteInfos_Name}</del>
+      {/if}
+    </td>
+    <td>{$member->rank}</td>
+  </tr>
+</table>
+
+
+{/block}

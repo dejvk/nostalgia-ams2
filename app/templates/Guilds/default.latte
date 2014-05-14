@@ -1,0 +1,11 @@
+{block content}
+
+<h1 n:block="title">Cechy</h1>
+
+<table>
+  <tr n:foreach="$guilds as $guild">
+  <td>{$guild->name}</td>
+  <td>{$guild->guild_master}</td>
+  </tr>
+</table>
+{/block}
